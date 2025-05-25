@@ -18,9 +18,9 @@ public:
     void displayItems(std::ostream& os = std::cout);
     auto begin();
     auto end() ;
+    const std::vector<std::shared_ptr<T>>& getItems() const;
     int size();
     std::shared_ptr<T> findId(int id);
-    auto getItems();
 };
 
 template<typename T>
@@ -52,7 +52,7 @@ int Database<T>::size() {return items.size();}
 template <typename T>
 std::shared_ptr<T> Database<T>::findId(int id)
 {
-    for (auto& i : items)
+    for (const auto& i : items)
         if (i->getId()==id)
             return i;
 
@@ -65,5 +65,5 @@ template <typename T>
 auto Database<T>:: end() {return items.end();}
 
 template <typename T>
-auto Database<T> :: getItems(){return items;};
+const std::vector<std::shared_ptr<T>>& Database<T>::getItems() const {return items;};
 #endif //TEMPLATE_H

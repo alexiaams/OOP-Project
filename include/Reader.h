@@ -36,8 +36,8 @@ public:
     //virtual void readMore(std::istream& is)= 0;
     friend std::ostream& operator<<(std::ostream& os, const Reader& reader);
     friend std::istream& operator>>(std::istream& is, Reader& reader);
-    std::string getFirstName() const;
-    std::string getLastName() const;
+    const std::string getFirstName() const;
+    const std::string getLastName() const;
     void displayBorrowedBooks() const;
 };
 

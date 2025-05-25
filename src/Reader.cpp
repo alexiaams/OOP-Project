@@ -8,9 +8,10 @@ int Reader::totalReaders=0;
 Reader::Reader(std::string  firstName_, std::string  lastName_, const int age_): firstName(std::move(firstName_)), lastName(std::move(lastName_)), age(age_), readerId(++totalReaders){}
 Reader::Reader(const Reader& other): firstName(other.firstName), lastName(other.lastName), age(other.age), readerId(++totalReaders) {}
 Reader& Reader::operator=(const Reader& other)
-{   // isi poate schimba numele/prenumele dar nu si varsta si id ul
+{
     firstName=other.firstName;
     lastName=other.lastName;
+    age=other.age;
     return *this;
 }
 bool Reader::borrowBook(const std::shared_ptr<Book>&book)
@@ -83,5 +84,5 @@ std::istream& operator>>(std::istream& is, Reader& reader)
 }
 int Reader:: getId() const { return readerId; }
 int Reader:: getMembershipCost() const { return membershipCost(); }
-std::string Reader::getFirstName() const { return firstName; }
-std::string Reader::getLastName() const { return lastName; }
+const std::string Reader::getFirstName() const { return firstName; }
+const std::string Reader::getLastName() const { return lastName; }

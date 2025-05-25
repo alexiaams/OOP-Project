@@ -11,11 +11,11 @@ Book::Book(std::string name_, std::string  author_, std::string genre_, const in
     genre(std::move(genre_)), releaseYear(releaseYear_), availableCopies(availableCopies_){}
 
 int Book::getId() const { return bookId; }
-std::string Book::getAuthor() const { return author; }
+const std::string Book::getAuthor() const { return author; }
 int Book::getAvailableCopies() const { return availableCopies; }
-std::string Book::getGenre() const { return genre; }
+const std::string Book::getGenre() const { return genre; }
 int Book::getYear() const { return releaseYear; }
-std::string Book::getName() const { return name; }
+const std::string Book::getName() const { return name; }
 
 Book& Book::operator++()
 {
