@@ -6,19 +6,8 @@ Functionalitati:
 3. Posiblititatea de a sorta si cauta carti dupa anumite criterii.
 Nerespectarea duce la nepunctarea proiectului
 
-  - programul va fi scris în C++
-  - programul va avea un meniu interactiv (doar pentru ilustrarea funcționalității)
-  - programul nu are erori de compilare
-  - fară variabile globale
-  - datele membre private(sau protected)
-  - GitHub Actions trecute
-  - commit-uri pe Git adecvate si punctuale
-  - folosirea a funcționalităților limbajului fără sens
-  - folosirea a funcționlităților limbajului cu scopul de a încălca "legal" o altă regulă
-      - folosirea excesivă a claselor friend
-      - folosirea excesviă a elementelor statice
-  - lipsa separarea implementarii de definitie
 
+  
 ## Cerințe
 - [ ] definirea a minim **2-3 ieararhii de clase** care sa interactioneze in cadrul temei alese (fie prin compunere, agregare sau doar sa apeleze metodele celeilalte intr-un mod logic) (6p)
   - minim o clasa cu:
