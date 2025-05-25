@@ -62,22 +62,22 @@ std::ostream& operator<<(std::ostream& os, const Book& book)
     book.display(os);
     return os;
 }
-void Book::borrow()
-{
-    if (availableCopies>0)
-    {
-        availableCopies--;
-        std::cout<<"Book borrowed! \n";
-    }
-    else
-    {
-        availability=false;
-        std::cout<<"No copies available! \n";
-    }
-}
-void Book::returnB()
-{
-    availableCopies++;
-    availability=true;
-    std::cout<<"Book returned! \n";
-}
+// void Book::borrow()
+// {
+//     if (availableCopies>0)
+//     {
+//         availableCopies--;
+//         std::cout<<"Book borrowed! \n";
+//     }
+//     else
+//     {
+//         availability=false;
+//         std::cout<<"No copies available! \n";
+//     }
+// }
+// void Book::returnB()
+// {
+//     availableCopies++;
+//     availability=true;
+//     std::cout<<"Book returned! \n";
+// }
