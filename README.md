@@ -1,6 +1,9 @@
 Library Managment System.
 
-
+Functionalitati:
+1. 2 meniuri separate pentru admin si user.
+2. Fiecare carte si fiecare user au ID unic propriu.
+3. Posiblititatea de a sorta si cauta carti dupa anumite criterii.
 Nerespectarea duce la nepunctarea proiectului
 
   - programul va fi scris în C++
