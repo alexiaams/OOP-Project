@@ -1,0 +1,87 @@
+//
+// Created by alexi on 5/25/2025.
+//
+#include "Reader.h"
+#include <iostream>
+
+int Reader::totalReaders=0;
+Reader::Reader(std::string  firstName_, std::string  lastName_, const int age_): firstName(std::move(firstName_)), lastName(std::move(lastName_)), age(age_), readerId(++totalReaders){}
+Reader::Reader(const Reader& other): firstName(other.firstName), lastName(other.lastName), age(other.age), readerId(++totalReaders) {}
+Reader& Reader::operator=(const Reader& other)
+{   // isi poate schimba numele/prenumele dar nu si varsta si id ul
+    firstName=other.firstName;
+    lastName=other.lastName;
+    return *this;
+}
+bool Reader::borrowBook(const std::shared_ptr<Book>&book)
+{
+    if (borrowedBooks.size()==maxBooksAllowed())
+    {
+        std::cout<<"Borrow limit reached! \n";
+        return false;
+    }
+    if (book->getAvailableCopies() <= 0 )
+    {
+        std::cout<<"Book not available! \n";
+        return false;
+    }
+
+    borrowedBooks.push_back(book);
+    --(*book);
+    std::cout<<firstName<< " "<<lastName<<"borrowed"<<book->getName();
+    return true;
+}
+void Reader::addReader(std::istream& is)
+{
+    std::cout<<"Enter reader details: \n";
+    std::cout<<"First name: ";
+    is>>firstName;
+    std::cout<<"Last name: ";
+    is>>lastName;
+    std::cout<<"Age: ";
+    is>>age;
+
+}
+
+
+void Reader::returnBook(Book& book)
+{   bool found=false;
+    for (auto i=borrowedBooks.begin(); i!=borrowedBooks.end(); ++i)
+    {
+        if ((*i)->getName()==book.getName())
+        {   readBooks.push_back(*i);
+            borrowedBooks.erase(i);
+            ++book;
+            std::cout<<firstName<< " "<<lastName<<"returned "<<book.getName();
+            found=true;
+            break;
+        }
+    }
+    if (!found)
+        std::cout<<"Book not found! \n";
+}
+
+void Reader::displayBorrowedBooks() const
+{
+    if (borrowedBooks.empty())
+    {
+        std::cout<<"No books borrowed! \n";
+        return;
+    }
+    std::cout<<"Borrowed books: \n";
+    for (const auto& book : borrowedBooks)
+        book->display(std::cout);
+}
+std::ostream& operator<<(std::ostream& os, const Reader& reader)
+{
+    os<< "First name: "<<reader.firstName<<"\n Last name: "<<reader.lastName<<"\n Age:  "<<reader.age;
+    return os;
+}
+std::istream& operator>>(std::istream& is, Reader& reader)
+{   reader.addReader(is);
+    return is;
+}
+int Reader:: getId() const { return readerId; }
+int Reader:: getMembershipCost() const { return membershipCost(); }
+std::string Reader::getFirstName() const { return firstName; }
+std::string Reader::getLastName() const { return lastName; }
