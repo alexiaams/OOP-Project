@@ -1,34 +1,5 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+Library Managment System.
 
-### Folosiți template-ul corespunzător grupei voastre!
-
-| Laborant  | Link template                                |
-|-----------|----------------------------------------------|
-| Dragoș B  | https://github.com/Ionnier/oop-template      |
-| Tiberiu M | https://github.com/MaximTiberiu/oop-template |
-| Marius MC | https://github.com/mcmarius/oop-template     |
-
-## Instrucțiuni de compilare
-
-Proiectul este configurat cu CMake.
-
-Instrucțiuni pentru terminal:
-
-1. Pasul de configurare
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-# sau ./scripts/cmake.sh configure
-```
-
-Sau pe Windows cu GCC:
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -G Ninja
-# sau ./scripts/cmake.sh configure -g Ninja
-```
-
-La acest pas putem cere să generăm fișiere de proiect pentru diverse medii de lucru.
-
-## Cerințe obligatorii
 
 Nerespectarea duce la nepunctarea proiectului
 
