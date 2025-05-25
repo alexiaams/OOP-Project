@@ -361,10 +361,12 @@ void Library::start()
             case 2:
                 if(!adminMenu())
                     break;
+                break;
             case 3:
                 std::cout << "Have a nice day!!\n";
                 return;
-            default:;
+            default:
+                std::cout << "Invalid input. Please choose a number between 1 and 3.\n";;
         }
     }while(true);
 }
