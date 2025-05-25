@@ -268,7 +268,8 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user)
         std::cout<<"5. Exit\n";
         std::cout<<"=========================\n";
         std::cout<<"What do you want to do?\n";
-        switch (int choice=validateChoice( 1, 5))
+        int choice=validateChoice( 1, 5);
+        switch (choice)
         {
         case 1:
             bookDb.displayItems();
@@ -359,7 +360,7 @@ void Library::start()
                 break;
             case 2:
                 if(!adminMenu())
-                break;
+                    break;
             case 3:
                 std::cout << "Have a nice day!!\n";
                 return;

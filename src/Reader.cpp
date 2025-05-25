@@ -16,7 +16,7 @@ Reader& Reader::operator=(const Reader& other)
 }
 bool Reader::borrowBook(const std::shared_ptr<Book>&book)
 {
-    if (borrowedBooks.size()==maxBooksAllowed())
+    if (borrowedBooks.size()==static_cast<std::size_t>(maxBooksAllowed()))
     {
         std::cout<<"Borrow limit reached! \n";
         return false;
@@ -83,6 +83,6 @@ std::istream& operator>>(std::istream& is, Reader& reader)
     return is;
 }
 int Reader:: getId() const { return readerId; }
-int Reader:: getMembershipCost() const { return membershipCost(); }
-const std::string Reader::getFirstName() const { return firstName; }
-const std::string Reader::getLastName() const { return lastName; }
+//int Reader:: getMembershipCost() const { return membershipCost(); }
+const std::string& Reader::getFirstName() const { return firstName; }
+const std::string& Reader::getLastName() const { return lastName; }

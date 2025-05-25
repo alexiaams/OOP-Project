@@ -22,15 +22,15 @@ public:
     virtual ~Book()=default;
     //getters
     int getId() const;
-    const std::string getAuthor() const;
-    const std::string getName() const;
+    const std::string& getAuthor() const;
+    const std::string& getName() const;
     int getYear() const;
     int getAvailableCopies() const;
-    const std::string getGenre() const;
+    const std::string& getGenre() const;
 
     virtual void display(std::ostream& os) const;
-    void borrow();
-    void returnB();
+    //void borrow();
+    //void returnB();
     //overload
     Book& operator++();
     Book& operator--();
