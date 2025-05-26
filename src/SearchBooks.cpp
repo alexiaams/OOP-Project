@@ -1,5 +1,5 @@
-// #include "SearchBooks.h"
-//
+#include "SearchBooks.h"
+
 // std::vector<std::shared_ptr<Book>> SearchBooks::searchByTitle(const std::vector<std::shared_ptr<Book>>& books, const std::string& title)
 // {
 //     std::vector<std::shared_ptr<Book>> temp;
@@ -28,3 +28,15 @@
 //             temp.push_back(book);
 //     return temp;
 // }
+
+std::vector<std::shared_ptr<Book>> SearchBooks::searchAll(const std::vector<std::shared_ptr<Book>>& books, const std::string& searchTerm)
+{
+    std::vector<std::shared_ptr<Book>> temp;
+    const std::string LowerSearchTerm=toLower(searchTerm);
+    for (const auto& book:books)
+        if (toLower(book->getName())==LowerSearchTerm || toLower(book->getAuthor())==LowerSearchTerm || toLower(book->getGenre())==LowerSearchTerm)
+            temp.push_back(book);
+    return temp;
+
+}
+

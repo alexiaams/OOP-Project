@@ -13,6 +13,7 @@
 #include "Admin.h"
 #include "Template.h"
 #include "Book.h"
+#include "SearchBooks.h"
 
 Library* Library::instance=nullptr;
 Library& Library::getInstance()
@@ -32,10 +33,10 @@ int Library::validateChoice(const int min, const int max)
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout<<"Invalid choice! Please enter a number between "<<min<<" and "<<max<<" ( or press '0' to exit)\n";
+            continue;
         }
-        else if (choice==0)
+        if (choice==0)
             return -1;
-        else
         {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return choice;
@@ -123,6 +124,16 @@ void Library::addReader(std::istream& is)
         i->display(std::cout);
 
 }
+void Library::searchBook() const
+{
+    std::string searchTerm;
+    std::cout<<"Enter search term: \n";
+    std::cin>>searchTerm;
+    const auto books=SearchBooks:: searchAll(bookDb.getItems(),searchTerm);
+    for (const auto& book : books)
+        book->display(std::cout);
+}
+
 bool Library::adminMenu()
 {
     if (admin.login())
@@ -134,8 +145,11 @@ bool Library::adminMenu()
             std::cout<<"2. Remove book\n";
             std::cout<<"3. Display books\n";
             std::cout<<"4.Display readers\n";
-            std::cout<<"5. Exit\n";
-            std::cin>>choice;
+            std::cout<<"5. Search a book\n";
+            std::cout<<"6. Exit\n";
+            choice=validateChoice(1,6);
+            if (choice==-1)
+                return false;
             switch (choice)
             {
                 case 1:
@@ -151,6 +165,9 @@ bool Library::adminMenu()
                     readerDb.displayItems();
                     break;
                 case 5:
+                    searchBook();
+                    break;
+                case 6:
                     return true;
                 default:
                     std::cout<<"Invalid input! Please choose 1, 2, 3, 4 or 5\n";
@@ -159,7 +176,6 @@ bool Library::adminMenu()
             }
         }
     }
-    else
         return false;
 }
 void Library::addBook(std::istream& is)
@@ -265,10 +281,11 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user)
         std::cout<<"2. Display borrowed books\n";
         std::cout<<"3. Borrow a book \n";
         std::cout<<"4. Return a book\n";
-        std::cout<<"5. Exit\n";
+        std::cout<<"5. Search a book\n";
+        std::cout<<"6. Exit\n";
         std::cout<<"=========================\n";
         std::cout<<"What do you want to do?\n";
-        int choice=validateChoice( 1, 5);
+        int choice=validateChoice( 1, 6);
         switch (choice)
         {
         case 1:
@@ -324,6 +341,7 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user)
                 }
                 break;
             }
+            break;
         case 4:
             {
                 user->displayBorrowedBooks();
@@ -336,6 +354,9 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user)
                 break;
             }
         case 5:
+            searchBook();
+            break;
+        case 6:
             return;
         default:
             std::cout<<"Invalid input. Please choose a number between 1 and 5.\n";

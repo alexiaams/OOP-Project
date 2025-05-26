@@ -25,6 +25,7 @@ public:
     void userMenu();
     bool adminMenu();
     void start();
+    void searchBook() const;
     std::shared_ptr<Reader> loginUser();
     void userMenu2(const std::shared_ptr<Reader>& user);
     static int validateChoice(int min, int max);
