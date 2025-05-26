@@ -37,6 +37,7 @@ int Library::validateChoice(const int min, const int max)
         }
         if (choice==0)
             return -1;
+
         {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return choice;
@@ -108,7 +109,7 @@ void Library::addReader(std::istream& is)
             reader->addReader(is);
             break;
         case 2:
-            reader = std::make_shared<AveragePerson>(" ", " ", 0);
+            reader = std::make_shared<AveragePerson>(" ", " ", 0, " ");
             reader->addReader(is);
             break;
         case 3:
@@ -144,7 +145,7 @@ bool Library::adminMenu()
             std::cout<<"1. Add book\n";
             std::cout<<"2. Remove book\n";
             std::cout<<"3. Display books\n";
-            std::cout<<"4.Display readers\n";
+            std::cout<<"4. Display readers\n";
             std::cout<<"5. Search a book\n";
             std::cout<<"6. Exit\n";
             choice=validateChoice(1,6);
@@ -188,11 +189,11 @@ void Library::addBook(std::istream& is)
         return;
     std::cout<<"Enter book details: \n";
     std::cout<<"Name: ";
-    is>>name_;
+    std::getline(is >> std::ws, name_);
     std::cout<<"Author: ";
-    is>>author_;
+    std::getline(is >> std::ws, name_);
     std::cout<<"Genre: ";
-    is>>genre_;
+    std::getline(is >> std::ws, name_);
     std::cout<<"Release Year: ";
     is>>releaseYear_;
     std::cout<<"Available Copies: ";
@@ -234,7 +235,7 @@ std::shared_ptr<Reader> Library::loginUser()
     }
     if (auto user=readerDb.findId(id))
     {
-        std::cout<<"Welcome"<<user->getFirstName()<<" "<<user->getLastName()<<"!\n";
+        std::cout<<"Welcome "<<user->getFirstName()<<" "<<user->getLastName()<<"!\n";
         userMenu2(user);
         return user;
     }
@@ -286,6 +287,8 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user)
         std::cout<<"=========================\n";
         std::cout<<"What do you want to do?\n";
         int choice=validateChoice( 1, 6);
+        if (choice==-1)
+            return;
         switch (choice)
         {
         case 1:

@@ -35,7 +35,7 @@ public:
     Book& operator++();
     Book& operator--();
 
-    friend std::istream& operator>>(std::istream& in, Book& book);
+    friend std::istream& operator>>(std::istream& is, Book& book);
     friend std::ostream& operator<<(std::ostream& os, const Book& book);
 
 };

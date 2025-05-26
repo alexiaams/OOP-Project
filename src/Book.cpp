@@ -4,19 +4,19 @@
 
 #include "Book.h"
 #include <iostream>
-
+#include <string>
 int Book::id=0;
 Book::Book(std::string name_, std::string  author_, std::string genre_, const int releaseYear_,
     const int availableCopies_): bookId(++id), name(std::move(name_)), author(std::move(author_)),
     genre(std::move(genre_)), releaseYear(releaseYear_), availableCopies(availableCopies_){}
 
 int Book::getId() const { return bookId; }
-const std::string& Book::getAuthor() const { return author; }
+
 int Book::getAvailableCopies() const { return availableCopies; }
 const std::string& Book::getGenre() const { return genre; }
 int Book::getYear() const { return releaseYear; }
 const std::string& Book::getName() const { return name; }
-
+const std::string& Book:: getAuthor() const{return author;}
 Book& Book::operator++()
 {
     ++availableCopies;
@@ -43,19 +43,19 @@ void Book::display(std::ostream& os) const
        << std::endl;
 }
 
-std::istream& operator>>(std::istream& in, Book& book)
+std::istream& operator>>(std::istream& is, Book& book)
 {
     std::cout << "Book Name: ";
-    in >> book.name;
+    std::getline(is >> std::ws, book.name);
     std::cout << "Author: ";
-    in>>book.author;
+    std::getline(is >> std::ws, book.author);
     std::cout << "Genre: ";
-    in>>book.genre;
+    std::getline(is >> std::ws, book.genre);
     std::cout << "Release Year: ";
-    in>>book.releaseYear;
+    is>>book.releaseYear;
     std::cout << "Available Copies: ";
-    in>>book.availableCopies;
-    return in;
+    is>>book.availableCopies;
+    return is;
 }
 std::ostream& operator<<(std::ostream& os, const Book& book)
 {

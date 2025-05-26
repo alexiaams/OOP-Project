@@ -26,14 +26,14 @@ public:
     Reader& operator=(const Reader& other);
     int getId() const;
     virtual ~Reader()=default;
-    //virtual int membershipCost() const = 0;
+    virtual int membershipCost() const = 0;
     virtual int maxBooksAllowed()=0;
     //int getMembershipCost() const;
     virtual void display(std::ostream& os) const = 0;
     bool borrowBook(const std::shared_ptr<Book>&book);
     void returnBook(Book& book);
     virtual void addReader(std::istream& is);
-    //virtual void readMore(std::istream& is)= 0;
+    virtual void readMore(std::istream& is)= 0;
     friend std::ostream& operator<<(std::ostream& os, const Reader& reader);
     friend std::istream& operator>>(std::istream& is, Reader& reader);
     const std::string& getFirstName() const;

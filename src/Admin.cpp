@@ -3,6 +3,7 @@
 //
 
 #include "Admin.h"
+#include<string>
 #include <iostream>
 #include <limits>
 int Admin::passwordTries = 0;

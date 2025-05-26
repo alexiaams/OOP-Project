@@ -1,8 +1,13 @@
-//
-// Created by alexi on 5/25/2025.
-//
+
 #include "Reader.h"
 #include <iostream>
+#include <limits>
+#include <string>
+#include <vector>
+#include <memory>
+
+#include "InvalidNumber.h"
+
 
 int Reader::totalReaders=0;
 Reader::Reader(std::string  firstName_, std::string  lastName_, const int age_): firstName(std::move(firstName_)), lastName(std::move(lastName_)), age(age_), readerId(++totalReaders){}
@@ -36,13 +41,29 @@ void Reader::addReader(std::istream& is)
 {
     std::cout<<"Enter reader details: \n";
     std::cout<<"First name: ";
-    is>>firstName;
+    std::getline(is >> std::ws, firstName);
     std::cout<<"Last name: ";
-    is>>lastName;
-    std::cout<<"Age: ";
-    is>>age;
-
+    std::getline(is >> std::ws, lastName);
+    while (true)
+    {
+        std::cout<<"Age: ";
+        try
+        {
+            is>>age;
+            if (is.fail() || age<=0)
+            {
+                is.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw InvalidAge();
+            }
+            break;
+        }catch (InvalidAge& e)
+        {
+            std::cout<<e.what()<<"\n";
+        }
+    }
 }
+
 
 
 void Reader::returnBook(Book& book)

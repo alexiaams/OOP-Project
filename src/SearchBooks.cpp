@@ -1,4 +1,6 @@
 #include "SearchBooks.h"
+#include <locale>
+
 
 // std::vector<std::shared_ptr<Book>> SearchBooks::searchByTitle(const std::vector<std::shared_ptr<Book>>& books, const std::string& title)
 // {

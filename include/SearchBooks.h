@@ -7,7 +7,6 @@
 #include <memory>
 #include "Book.h"
 #include <algorithm>
-#include <functional>
 #include <locale>
 #include <cctype>
 

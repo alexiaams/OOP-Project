@@ -7,7 +7,7 @@
 
 #include "Book.h"
 
-class Poetry : virtual public Book
+class Poetry : public Book
 {
     const int poemCount;
 public:

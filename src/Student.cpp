@@ -1,25 +1,49 @@
-//
-// Created by alexi on 5/25/2025.
-//
+
 #include "Student.h"
 #include <iostream>
+#include <limits>
+
+#include "InvalidNumber.h"
 
 Student::Student(std::string firstName_, std::string lastName_, int age_, int grade_): Reader(std::move(firstName_), std::move(lastName_), age_), grade(grade_){}
-int Student::membershipCost() const { return 10;}
+int Student::membershipCost() const
+{
+    if (grade<5)
+        return 0;
+    if (grade<9)
+        return 5;
+    if (grade<=12)
+        return 10;;
+}
 int Student::maxBooksAllowed(){ return 5;}
 void Student::display(std::ostream& os) const
 {
     os<< "ID: "<<getId()<<" Student: "<<firstName<<" "<<lastName<<" grade: "<<grade<<" \n";
 }
-// void Student::readMore(std::istream& is)
-// {
-//     std::cout<<"Enter grade: ";
-//     is>>grade;
-// }
+void Student::readMore(std::istream& is)
+{
+    while (true)
+    {
+        std::cout<<"Enter grade: ";
+        try
+        {
+            is>>grade;
+            if (is.fail() || grade<1 || grade>12)
+            {
+                is.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw InvalidGrade();
+            }
+            break;
+        }
+        catch (InvalidGrade& e)
+        {
+            std::cout<<e.what()<<"\n";
+        }
+    }
+}
 void Student::addReader(std::istream& is)
-{   std::cout<<"student";
+{
     Reader::addReader(is);
-
-    std::cout<<"Enter grade: ";
-    is>>grade;
+    readMore(is);
 }

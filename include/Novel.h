@@ -7,7 +7,7 @@
 
 #include "Book.h"
 
-class Novel : virtual public Book
+class Novel : public Book
 {
     const int pages;
     const int chapters;

@@ -1,6 +1,7 @@
 #include "FilterBooks.h"
-
 #include <algorithm>
+#include<vector>
+#include<memory>
 
 
 std::vector<std::shared_ptr<Book>> FilterBooks::filter(const std::vector<std::shared_ptr<Book>>& books, SortBy sortBy, SortOrder sortOrder)
