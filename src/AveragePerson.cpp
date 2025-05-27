@@ -7,10 +7,12 @@ AveragePerson::AveragePerson(std::string firstName_, std::string lastName_, int 
 int AveragePerson::membershipCost() const
 {
     if (occupation=="teacher")
-        return 20;
+        return (membershipPrice-75/100*membershipPrice);
     if (occupation=="doctor")
-        return 25;
-    return 45;
+        return membershipPrice-50/100*membershipPrice;
+    if (age >=65)
+        return membershipPrice-25/100*membershipPrice;
+    return membershipPrice;
 }
 
 int AveragePerson::maxBooksAllowed(){ return 3;}
