@@ -41,9 +41,29 @@ void Student::readMore(std::istream& is)
             std::cout<<e.what()<<"\n";
         }
     }
+    std::cout<<"Enter number of months for your membership: \n";
+    while (true)
+    {
+        try
+        {
+            is>>months;
+            if (is.fail() || months<1)
+            {
+                is.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw InvalidMonths();
+            }
+        }
+        catch (InvalidMonths& e)
+        {
+            std::cout<<e.what()<<"\n";
+        }
+    }
+
 }
 void Student::addReader(std::istream& is)
 {
     Reader::addReader(is);
     readMore(is);
+    std::cout<< "Membership cost: "<<membershipCost()<<" | Total to pay: "<<membershipCost()*months<<"\n";
 }

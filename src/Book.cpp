@@ -48,7 +48,7 @@ std::istream& operator>>(std::istream& is, Book& book)
     std::cout << "Book Name: ";
     std::getline(is >> std::ws, book.name);
     std::cout << "Author: ";
-    std::getline(is >> std::ws, book.author);
+    std::getline(is >> std::ws, book.author); // asta cu ws e tot gasita pe geeks for geeks https://www.geeksforgeeks.org/problem-with-getline-after-cin/
     std::cout << "Genre: ";
     std::getline(is >> std::ws, book.genre);
     std::cout << "Release Year: ";

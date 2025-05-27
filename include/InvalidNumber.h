@@ -24,5 +24,17 @@ public:
 
 };
 
+class InvalidChoice:public InvalidNumber
+{
+    public:
+    InvalidChoice();
+};
+
+class InvalidMonths : public InvalidNumber
+{
+public:
+    InvalidMonths();
+};
+
 #endif //INVALIDNUMBER_H
 

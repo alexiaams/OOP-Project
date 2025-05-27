@@ -150,8 +150,8 @@ add_executable(${MAIN_EXECUTABLE_NAME} main.cpp ${SOURCES}
         src/StudentBuilder.cpp
         include/PersonBuilder.h
         src/PersonBuilder.cpp
-        include/SearchBooks.h
-        src/SearchBooks.cpp
+        include/SearchStrategy.h
+        src/SearchStrategy.cpp
         include/FilterBooks.h
         src/FilterBooks.cpp
         include/Library.h

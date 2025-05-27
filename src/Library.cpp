@@ -13,7 +13,8 @@
 #include "Admin.h"
 #include "Template.h"
 #include "Book.h"
-#include "SearchBooks.h"
+#include "InvalidNumber.h"
+#include "SearchStrategy.h"
 
 Library* Library::instance=nullptr;
 Library& Library::getInstance()
@@ -28,20 +29,23 @@ int Library::validateChoice(const int min, const int max)
     while (true)
     {
         std::cin>>choice;
-        if (std::cin.fail() || choice<min || choice>max)
+        if (std::cin.fail())
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout<<"Invalid choice! Please enter a number between "<<min<<" and "<<max<<" ( or press '0' to exit)\n";
             continue;
         }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         if (choice==0)
             return -1;
-
+        if (choice<min || choice>max)
         {
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            return choice;
+            std::cout<<"Invalid choice! Please enter a number between "<<min<<" and "<<max<<" ( or press '0' to exit)\n";
+            continue;
         }
+        return choice;
+
     }
 }
 
@@ -127,12 +131,42 @@ void Library::addReader(std::istream& is)
 }
 void Library::searchBook() const
 {
-    std::string searchTerm;
-    std::cout<<"Enter search term: \n";
-    std::cin>>searchTerm;
-    const auto books=SearchBooks:: searchAll(bookDb.getItems(),searchTerm);
-    for (const auto& book : books)
-        book->display(std::cout);
+    std::shared_ptr<SearchStrategy> search;
+       try
+       {
+           int choice;
+           std::cout<<"Search by:\n 1. Book name \n 2. Author\n 3.Genre \n";
+           std::cin>>choice;
+           if (std::cin.fail())
+           {
+               std::cin.clear();
+               std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+               throw InvalidChoice();
+           }
+           if (choice==1)
+               search=std::make_shared<SearchByName>();
+           else if (choice==2)
+               search=std::make_shared<SearchByAuthor>();
+           else if (choice==3)
+               search=std::make_shared<SearchByGenre>();
+           else
+               throw InvalidChoice();
+       }
+        catch (InvalidChoice& e)
+       {
+           std::cout<<e.what()<<"\n";
+           return;
+       }
+        std::string searchTerm;
+        std::cout<<"Enter search term: \n";
+        std::cin.ignore();
+        std::getline(std::cin, searchTerm);
+        std::vector<std::shared_ptr<Book>> books=search->search(bookDb.getItems(),searchTerm);
+        if (books.empty())
+            std::cout<<"No books found!\n";
+        else
+            for (const auto& book : books)
+                book->display(std::cout);
 }
 
 bool Library::adminMenu()
@@ -150,7 +184,10 @@ bool Library::adminMenu()
             std::cout<<"6. Exit\n";
             choice=validateChoice(1,6);
             if (choice==-1)
+            {
+                std::cout<<"am iesit\n";
                 return false;
+            }
             switch (choice)
             {
                 case 1:
@@ -191,9 +228,9 @@ void Library::addBook(std::istream& is)
     std::cout<<"Name: ";
     std::getline(is >> std::ws, name_);
     std::cout<<"Author: ";
-    std::getline(is >> std::ws, name_);
+    std::getline(is >> std::ws, author_);
     std::cout<<"Genre: ";
-    std::getline(is >> std::ws, name_);
+    std::getline(is >> std::ws, genre_);
     std::cout<<"Release Year: ";
     is>>releaseYear_;
     std::cout<<"Available Copies: ";
@@ -378,6 +415,7 @@ void Library::start()
         std::cout << "3. Exit\n";
         int choice;
         std::cin >> choice;
+        choice = validateChoice(1, 3);
         switch (choice) {
             case 1:
                 userMenu();
@@ -390,7 +428,7 @@ void Library::start()
                 std::cout << "Have a nice day!!\n";
                 return;
             default:
-                std::cout << "Invalid input. Please choose a number between 1 and 3.\n";;
+                break;
         }
     }while(true);
 }

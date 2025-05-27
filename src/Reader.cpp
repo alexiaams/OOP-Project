@@ -74,7 +74,7 @@ void Reader::returnBook(Book& book)
         {   readBooks.push_back(*i);
             borrowedBooks.erase(i);
             ++book;
-            std::cout<<firstName<< " "<<lastName<<"returned "<<book.getName();
+            std::cout<<firstName<< " "<<lastName<<"returned  "<<book.getName()<<std::endl;
             found=true;
             break;
         }
