@@ -13,7 +13,7 @@ Reader::Reader(std::string firstName_, std::string  lastName_, const int age_): 
 {
     std::cout<<"reader id:"<<readerId<<std::endl;
 }
-Reader::Reader(const Reader& other): firstName(other.firstName), lastName(other.lastName), age(other.age), readerId(++totalReaders) {}
+Reader::Reader(const Reader& other): firstName(other.firstName), lastName(other.lastName), age(other.age), readerId(++totalReaders), months(other.months) {}
 Reader& Reader::operator=(const Reader& other)
 {
     firstName=other.firstName;

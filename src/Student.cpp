@@ -9,7 +9,7 @@ Student::Student(std::string firstName_, std::string lastName_, int age_, int gr
 int Student::membershipCost() const
 {
     if (grade<5)
-        return (membershipPrice-100/100*membershipPrice);
+        return 0;
     if (grade<9)
         return (membershipPrice-75/100*membershipPrice);
     return membershipPrice-50/100*membershipPrice;
