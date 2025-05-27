@@ -14,7 +14,7 @@ class Reader
     int age;
     const int readerId;
     static int totalReaders;
-    int months;
+    int months{};
 
     std::vector<std::shared_ptr<Book>> readBooks;
     std::vector<std::shared_ptr<Book>> borrowedBooks;

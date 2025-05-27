@@ -12,8 +12,7 @@ int Student::membershipCost() const
         return 0;
     if (grade<9)
         return 5;
-    if (grade<=12)
-        return 10;;
+    return 10;
 }
 int Student::maxBooksAllowed(){ return 5;}
 void Student::display(std::ostream& os) const
