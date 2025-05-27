@@ -1,4 +1,3 @@
-
 #include "Reader.h"
 #include <iostream>
 #include <limits>
@@ -10,13 +9,17 @@
 
 
 int Reader::totalReaders=0;
-Reader::Reader(std::string  firstName_, std::string  lastName_, const int age_): firstName(std::move(firstName_)), lastName(std::move(lastName_)), age(age_), readerId(++totalReaders), months(0){}
+Reader::Reader(std::string firstName_, std::string  lastName_, const int age_): firstName(std::move(firstName_)), lastName(std::move(lastName_)), age(age_), readerId(++totalReaders), months(0)
+{
+    std::cout<<"reader id:"<<readerId<<std::endl;
+}
 Reader::Reader(const Reader& other): firstName(other.firstName), lastName(other.lastName), age(other.age), readerId(++totalReaders) {}
 Reader& Reader::operator=(const Reader& other)
 {
     firstName=other.firstName;
     lastName=other.lastName;
     age=other.age;
+    months=other.months;
     return *this;
 }
 bool Reader::borrowBook(const std::shared_ptr<Book>&book)
@@ -34,7 +37,7 @@ bool Reader::borrowBook(const std::shared_ptr<Book>&book)
 
     borrowedBooks.push_back(book);
     --(*book);
-    std::cout<<firstName<< " "<<lastName<<"borrowed"<<book->getName();
+    std::cout<<firstName<< " "<<lastName<<" borrowed"<<book->getName()<<std::endl;
     return true;
 }
 void Reader::addReader(std::istream& is)
@@ -74,7 +77,7 @@ void Reader::returnBook(Book& book)
         {   readBooks.push_back(*i);
             borrowedBooks.erase(i);
             ++book;
-            std::cout<<firstName<< " "<<lastName<<"returned  "<<book.getName()<<std::endl;
+            std::cout<<firstName<< " "<<lastName<<" returned  "<<book.getName()<<std::endl;
             found=true;
             break;
         }

@@ -174,7 +174,6 @@ bool Library::adminMenu()
 {
     if (admin.login())
     {
-        int choice;
         while (true)
         {   std::cout<<"Hi admin! What do you want to do?\n";
             std::cout<<"1. Add book\n";
@@ -183,7 +182,7 @@ bool Library::adminMenu()
             std::cout<<"4. Display readers\n";
             std::cout<<"5. Search a book\n";
             std::cout<<"6. Exit\n";
-            choice=validateChoice(1,6);
+            const int choice = validateChoice(1, 6);
             if (choice==-1)
             {
                 std::cout<<"am iesit\n";
@@ -301,7 +300,7 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user)
         std::cout<<"6. Exit\n";
         std::cout<<"=========================\n";
         std::cout<<"What do you want to do?\n";
-        int choice=validateChoice( 1, 6);
+        const int choice=validateChoice( 1, 6);
         if (choice==-1)
             return;
         switch (choice)

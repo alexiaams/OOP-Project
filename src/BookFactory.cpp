@@ -39,23 +39,99 @@ std::shared_ptr<Book> BookFactory::createBook(std::istream& is, int type)
         }
     }
 
+    while (true)
+    {
+        std::cout<<"Available Copies: ";
+        try
+        {
+            is>>availableCopies_;
+            if (is.fail() || availableCopies_<=0)
+            {
+                is.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw InvalidNumber();
+            }
+            break;
+        }catch (InvalidNumber& e)
+        {
+            std::cout<<e.what()<<"\n";
+        }
+    }
+
+
     if (type==1)
     {
         int poemCount_;
-        std::cout<<"Enter poem count: ";
-        is>>poemCount_;
-        const auto book = std::make_shared<Poetry>(name_, author_, genre_, releaseYear_, availableCopies_, poemCount_);
-        return book;
-    }
+        while (true)
+        {
+            std::cout<<"Enter poem count: ";
+            try
+            {
+                is>>poemCount_;
+                if (is.fail() || poemCount_<=0)
+                {
+                    is.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    throw InvalidNumber();
+                }
+                break;
+            }
+            catch (InvalidNumber& e)
+            {
+                std::cout<<e.what()<<"\n";
+            }
+            is>>poemCount_;
+        }
+            const auto poetry = std::make_shared<Poetry>(name_, author_, genre_, releaseYear_, availableCopies_, poemCount_);
+            std::cout<<"Poetry created! \n";
+            return poetry;
+        }
+
     if (type==2)
     {
         int chapters_, pages_;
-        std::cout<<"Enter chapters: ";
-        is>>chapters_;
-        std::cout<<"Enter pages: ";
-        is>>pages_;
-        const auto book = std::make_shared<Novel>(name_, author_, genre_, releaseYear_, availableCopies_, pages_, chapters_);
-        return book;
+        while (true)
+        {
+            std::cout<<"Enter chapters: ";
+            try
+            {
+                is>>chapters_;
+                if (is.fail() || chapters_<=0)
+                {
+                    is.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    throw InvalidNumber();
+                }
+                break;
+            }
+            catch (InvalidNumber& e)
+            {
+                std::cout<<e.what()<<"\n";
+            }
+            is>>chapters_;
+        }
+        while (true)
+        {
+            std::cout<<"Enter pages: ";
+            try
+            {
+                is>>pages_;
+                if (is.fail() || pages_<=0)
+                {
+                    is.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    throw InvalidNumber();
+                }
+                break;
+            }catch (InvalidNumber& e)
+            {
+                std::cout<<e.what()<<"\n";
+            }
+            is>>pages_;
+        }
+        const auto novel = std::make_shared<Novel>(name_, author_, genre_, releaseYear_, availableCopies_, pages_, chapters_);
+        std::cout<<"Novel created! \n";
+        return novel;
     }
     return nullptr;
 }
