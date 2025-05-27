@@ -1,6 +1,3 @@
-//
-// Created by alexi on 5/25/2025.
-//
 
 #ifndef READER_H
 #define READER_H

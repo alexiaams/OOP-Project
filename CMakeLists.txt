@@ -158,6 +158,8 @@ add_executable(${MAIN_EXECUTABLE_NAME} main.cpp ${SOURCES}
         src/Library.cpp
         include/InvalidNumber.h
         src/InvalidNumber.cpp
+        include/BookFactory.h
+        src/BookFactory.cpp
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

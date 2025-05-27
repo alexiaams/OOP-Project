@@ -1,6 +1,3 @@
-//
-// Created by alexi on 5/25/2025.
-//
 
 #ifndef PERSONBUILDER_H
 #define PERSONBUILDER_H

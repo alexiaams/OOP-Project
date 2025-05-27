@@ -1,6 +1,4 @@
-//
-// Created by alexi on 5/25/2025.
-//
+
 
 #ifndef BOOK_H
 #define BOOK_H

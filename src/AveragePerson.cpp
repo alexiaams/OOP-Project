@@ -1,4 +1,3 @@
-
 #include "AveragePerson.h"
 #include <iostream>
 #include <limits>
@@ -7,9 +6,9 @@
 AveragePerson::AveragePerson(std::string firstName_, std::string lastName_, int age_, std::string occupation_): Reader(std::move(firstName_), std::move(lastName_), age_), occupation(std::move(occupation_)) {}
 int AveragePerson::membershipCost() const
 {
-    if (occupation=="Teacher")
+    if (occupation=="teacher")
         return 20;
-    if (occupation=="Doctor")
+    if (occupation=="doctor")
         return 25;
     return 45;
 }
@@ -17,7 +16,7 @@ int AveragePerson::membershipCost() const
 int AveragePerson::maxBooksAllowed(){ return 3;}
 void AveragePerson::display(std::ostream& os) const
 {
-    os<<"ID: "<< getId()<< " Average person: "<<firstName<<" "<<lastName<<" age: "<<age<<"ocuppation: "<<occupation<<" \n";
+    os<<"ID: "<< getId()<< " Average person: "<<firstName<<" "<<lastName<<" age: "<<age<<" ocuppation: "<<occupation<<" \n";
 }
 void AveragePerson::readMore(std::istream& is)
 {   std::cout<<"Enter ocupation: ";
@@ -27,14 +26,16 @@ void AveragePerson::readMore(std::istream& is)
     {
         try
         {
-            int months;
-            is>>months;
-            if (is.fail() || months<1)
+            int months_;
+            is>>months_;
+            if (is.fail() || months_<1)
             {
                 is.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 throw InvalidMonths();
             }
+            months=months_;
+            break;
         }
         catch (InvalidMonths& e)
         {

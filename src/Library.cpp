@@ -15,6 +15,7 @@
 #include "Book.h"
 #include "InvalidNumber.h"
 #include "SearchStrategy.h"
+#include "BookFactory.h"
 
 Library* Library::instance=nullptr;
 Library& Library::getInstance()
@@ -58,8 +59,8 @@ void Library::addData()
     Student s1 = builderS.addFirstName("Alex").addLastName("Popescu").addAge(19).addGrade(11).build();
     Student s2 = builderS.addFirstName("Maria").addLastName("Ionescu").addAge(20).addGrade(12).build();
 
-    AveragePerson p1 = builderP.addFirstName("Ana").addLastName("Marinescu").addAge(45).build();
-    AveragePerson p2 = builderP.addFirstName("Mihai").addLastName("Popa").addAge(70).build();
+    AveragePerson p1 = builderP.addFirstName("Ana").addLastName("Marinescu").addAge(45).addOccupation("Teacher").build();
+    AveragePerson p2 = builderP.addFirstName("Mihai").addLastName("Popa").addAge(70).addOccupation("Driver").build();
 
     readerDb.addItem(std::make_shared<Student>(s1));
     readerDb.addItem(std::make_shared<Student>(s2));
@@ -218,41 +219,18 @@ bool Library::adminMenu()
 }
 void Library::addBook(std::istream& is)
 {
-    std::string name_, author_, genre_;
-    int releaseYear_, availableCopies_;
     std::cout<<"What do you want to add? (1 for Poetry and 2 for Novel)\n";
     const int type = validateChoice( 1, 2);
     if (type==-1)
         return;
-    std::cout<<"Enter book details: \n";
-    std::cout<<"Name: ";
-    std::getline(is >> std::ws, name_);
-    std::cout<<"Author: ";
-    std::getline(is >> std::ws, author_);
-    std::cout<<"Genre: ";
-    std::getline(is >> std::ws, genre_);
-    std::cout<<"Release Year: ";
-    is>>releaseYear_;
-    std::cout<<"Available Copies: ";
-    is>>availableCopies_;
-    if (type==1)
+    auto book=BookFactory::createBook(is, type);
+    if (book!=nullptr)
     {
-        int poemCount_;
-        std::cout<<"Enter poem count: ";
-        is>>poemCount_;
-        const auto book = std::make_shared<Poetry>(name_, author_, genre_, releaseYear_, availableCopies_, poemCount_);
         bookDb.addItem(book);
+        std::cout<<"Book added! \n";
     }
-    if (type==2)
-    {
-        int chapters_, pages_;
-        std::cout<<"Enter chapters: ";
-        is>>chapters_;
-        std::cout<<"Enter pages: ";
-        is>>pages_;
-        const auto book = std::make_shared<Novel>(name_, author_, genre_, releaseYear_, availableCopies_, pages_, chapters_);
-        bookDb.addItem(book);
-    }
+    else
+        std::cout<<"Book adding failed.\n";
 
     for (const auto& i : bookDb )
         i->display(std::cout);
@@ -304,7 +282,7 @@ void Library::userMenu()
              break;
          }
         else
-            std::cout<<"Invalid input! Please enter 'y' or 'n'. \n"; //fa chestia sa tot ceara input pana dai corect ca esti incapabil si nu poti din prima
+            std::cout<<"Invalid input! Please enter 'y' or 'n'. \n";
     }
 }
 
@@ -414,7 +392,6 @@ void Library::start()
         std::cout << "2. Login admin\n";
         std::cout << "3. Exit\n";
         int choice;
-        std::cin >> choice;
         choice = validateChoice(1, 3);
         switch (choice) {
             case 1:

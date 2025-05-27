@@ -5,32 +5,37 @@
 #include <stdexcept>
 #include <string>
 
-class InvalidNumber: public std::runtime_error
+class NumberException: public std::runtime_error
 {
 public:
-    explicit InvalidNumber(const std::string& msg);
+    explicit NumberException(const std::string& msg);
 };
 
-class InvalidAge: public InvalidNumber
+class InvalidNumber:public NumberException
+{
+    public:
+    InvalidNumber();
+};
+class InvalidAge: public NumberException
 {
 public:
     InvalidAge();
 };
 
-class InvalidGrade: public InvalidNumber
+class InvalidGrade: public NumberException
 {
 public:
     InvalidGrade();
 
 };
 
-class InvalidChoice:public InvalidNumber
+class InvalidChoice:public NumberException
 {
     public:
     InvalidChoice();
 };
 
-class InvalidMonths : public InvalidNumber
+class InvalidMonths : public NumberException
 {
 public:
     InvalidMonths();

@@ -1,6 +1,4 @@
-//
-// Created by alexi on 5/25/2025.
-//
+
 
 #ifndef STUDENTBUILDER_H
 #define STUDENTBUILDER_H
