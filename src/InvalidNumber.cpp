@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <string>
 
-NumberException::NumberException(const std::string& msg): std::runtime_error(" " + msg) {}
+NumberException::NumberException(const std::string& msg): std::runtime_error(msg) {}
 
 InvalidAge::InvalidAge(): NumberException("Invalid age. Please enter a positive number."){}
 

@@ -9,6 +9,7 @@ class NumberException: public std::runtime_error
 {
 public:
     explicit NumberException(const std::string& msg);
+    virtual ~NumberException() = default;
 };
 
 class InvalidNumber:public NumberException

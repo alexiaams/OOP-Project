@@ -5,14 +5,15 @@
 
 #include "InvalidNumber.h"
 
-Student::Student(std::string firstName_, std::string lastName_, int age_, int grade_): Reader(std::move(firstName_), std::move(lastName_), age_), grade(grade_){}
-int Student::membershipCost() const
+Student::Student(std::string firstName_, std::string lastName_, const int age_, const int grade_): Reader(std::move(firstName_), std::move(lastName_), age_), grade(grade_){}
+
+double Student::membershipCost() const
 {
     if (grade<5)
         return 0;
     if (grade<9)
-        return (membershipPrice-75/100*membershipPrice);
-    return membershipPrice-50/100*membershipPrice;
+        return (membershipPrice-0.75*membershipPrice);
+    return membershipPrice-0.5*membershipPrice;
 }
 int Student::maxBooksAllowed(){ return 5;}
 void Student::display(std::ostream& os) const
@@ -30,9 +31,10 @@ void Student::readMore(std::istream& is)
             if (is.fail() || grade<1 || grade>12)
             {
                 is.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 throw InvalidGrade();
             }
+            is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }
         catch (InvalidGrade& e)
@@ -49,7 +51,7 @@ void Student::readMore(std::istream& is)
             if (is.fail() || months<1)
             {
                 is.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 throw InvalidMonths();
             }
             break;

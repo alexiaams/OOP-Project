@@ -4,24 +4,24 @@
 
 #include "InvalidNumber.h"
 AveragePerson::AveragePerson(std::string firstName_, std::string lastName_, int age_, std::string occupation_): Reader(std::move(firstName_), std::move(lastName_), age_), occupation(std::move(occupation_)) {}
-int AveragePerson::membershipCost() const
+double AveragePerson::membershipCost() const
 {
     if (occupation=="teacher")
-        return (membershipPrice-75/100*membershipPrice);
+        return (membershipPrice-0.75*membershipPrice);
     if (occupation=="doctor")
-        return membershipPrice-50/100*membershipPrice;
+        return membershipPrice-0.5*membershipPrice;
     if (age >=65)
-        return membershipPrice-25/100*membershipPrice;
+        return membershipPrice-0.25*membershipPrice;
     return membershipPrice;
 }
 
 int AveragePerson::maxBooksAllowed(){ return 3;}
 void AveragePerson::display(std::ostream& os) const
 {
-    os<<"ID: "<< getId()<< " Average person: "<<firstName<<" "<<lastName<<" age: "<<age<<" ocuppation: "<<occupation<<" \n";
+    os<<"ID: "<< getId()<< " Average person: "<<firstName<<" "<<lastName<<" age: "<<age<<" occupation: "<<occupation<<" \n";
 }
 void AveragePerson::readMore(std::istream& is)
-{   std::cout<<"Enter ocupation: ";
+{   std::cout<<"Enter occupation: ";
     std::getline(is >> std::ws, occupation);
     std::cout<<"Enter number of months for your membership: \n";
     while (true)
@@ -33,7 +33,7 @@ void AveragePerson::readMore(std::istream& is)
             if (is.fail() || months_<1)
             {
                 is.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 throw InvalidMonths();
             }
             months=months_;

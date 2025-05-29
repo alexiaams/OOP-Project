@@ -25,7 +25,7 @@ public:
     Reader& operator=(const Reader& other);
     int getId() const;
     virtual ~Reader()=default;
-    virtual int membershipCost() const = 0;
+    virtual double membershipCost() const = 0;
     virtual int maxBooksAllowed()=0;
     //int getMembershipCost() const;
     virtual void display(std::ostream& os) const = 0;

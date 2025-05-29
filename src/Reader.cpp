@@ -13,6 +13,8 @@ Reader::Reader(std::string firstName_, std::string  lastName_, const int age_): 
 {
     std::cout<<"reader id:"<<readerId<<std::endl;
 }
+
+
 Reader::Reader(const Reader& other): firstName(other.firstName), lastName(other.lastName), age(other.age), readerId(++totalReaders), months(other.months) {}
 Reader& Reader::operator=(const Reader& other)
 {
@@ -20,6 +22,8 @@ Reader& Reader::operator=(const Reader& other)
     lastName=other.lastName;
     age=other.age;
     months=other.months;
+    borrowedBooks=other.borrowedBooks;
+    readBooks=other.readBooks;
     return *this;
 }
 bool Reader::borrowBook(const std::shared_ptr<Book>&book)
@@ -37,7 +41,7 @@ bool Reader::borrowBook(const std::shared_ptr<Book>&book)
 
     borrowedBooks.push_back(book);
     --(*book);
-    std::cout<<firstName<< " "<<lastName<<" borrowed"<<book->getName()<<std::endl;
+    std::cout<<firstName<<" "<<lastName<<" borrowed" <<book->getName()<<std::endl;
     return true;
 }
 void Reader::addReader(std::istream& is)
@@ -56,17 +60,18 @@ void Reader::addReader(std::istream& is)
             if (is.fail() || age<=0)
             {
                 is.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 throw InvalidAge();
             }
+            is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
-        }catch (InvalidAge& e)
+        }
+        catch (InvalidAge& e)
         {
             std::cout<<e.what()<<"\n";
         }
     }
 }
-
 
 
 void Reader::returnBook(Book& book)
@@ -107,6 +112,5 @@ std::istream& operator>>(std::istream& is, Reader& reader)
     return is;
 }
 int Reader:: getId() const { return readerId; }
-//int Reader:: getMembershipCost() const { return membershipCost(); }
 const std::string& Reader::getFirstName() const { return firstName; }
 const std::string& Reader::getLastName() const { return lastName; }

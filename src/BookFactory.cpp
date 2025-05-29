@@ -29,9 +29,10 @@ std::shared_ptr<Book> BookFactory::createBook(std::istream& is, int type)
             if (is.fail() || releaseYear_<=0)
             {
                 is.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 throw InvalidNumber();
             }
+            is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }catch (InvalidNumber& e)
         {
@@ -48,9 +49,10 @@ std::shared_ptr<Book> BookFactory::createBook(std::istream& is, int type)
             if (is.fail() || availableCopies_<=0)
             {
                 is.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 throw InvalidNumber();
             }
+            is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }catch (InvalidNumber& e)
         {
@@ -71,16 +73,16 @@ std::shared_ptr<Book> BookFactory::createBook(std::istream& is, int type)
                 if (is.fail() || poemCount_<=0)
                 {
                     is.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     throw InvalidNumber();
                 }
+                is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 break;
             }
             catch (InvalidNumber& e)
             {
                 std::cout<<e.what()<<"\n";
             }
-            is>>poemCount_;
         }
             const auto poetry = std::make_shared<Poetry>(name_, author_, genre_, releaseYear_, availableCopies_, poemCount_);
             std::cout<<"Poetry created! \n";
@@ -99,16 +101,16 @@ std::shared_ptr<Book> BookFactory::createBook(std::istream& is, int type)
                 if (is.fail() || chapters_<=0)
                 {
                     is.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     throw InvalidNumber();
                 }
+                is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 break;
             }
             catch (InvalidNumber& e)
             {
                 std::cout<<e.what()<<"\n";
             }
-            is>>chapters_;
         }
         while (true)
         {
@@ -119,15 +121,15 @@ std::shared_ptr<Book> BookFactory::createBook(std::istream& is, int type)
                 if (is.fail() || pages_<=0)
                 {
                     is.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     throw InvalidNumber();
                 }
+                is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 break;
             }catch (InvalidNumber& e)
             {
                 std::cout<<e.what()<<"\n";
             }
-            is>>pages_;
         }
         const auto novel = std::make_shared<Novel>(name_, author_, genre_, releaseYear_, availableCopies_, pages_, chapters_);
         std::cout<<"Novel created! \n";
@@ -135,3 +137,4 @@ std::shared_ptr<Book> BookFactory::createBook(std::istream& is, int type)
     }
     return nullptr;
 }
+

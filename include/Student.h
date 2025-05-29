@@ -9,7 +9,7 @@ class Student: public Reader
     int grade;
 public:
     Student(std::string  firstName_, std::string  lastName_, int age_, int grade_);
-    int membershipCost() const override;
+    double membershipCost() const override;
     int maxBooksAllowed() override;
     void addReader(std::istream& is) override;
     void display(std::ostream& os) const override;

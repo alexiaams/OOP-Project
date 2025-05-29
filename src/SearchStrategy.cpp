@@ -3,16 +3,16 @@
 
 bool SearchByName::match(const std::shared_ptr<Book>& book, const std::string& searchTerm)
 {
-    return toLower(book->getName())==toLower(searchTerm);
+    return toLower(book->getName()).find(toLower(searchTerm)) != std::string::npos; // again chestie cautata pe google https://www.geeksforgeeks.org/string-find-in-cpp/
 }
 
 bool SearchByAuthor::match(const std::shared_ptr<Book>& book, const std::string& searchTerm)
 {
-    return toLower(book->getAuthor())==toLower(searchTerm);
+    return toLower(book->getAuthor()).find(toLower(searchTerm))!=std::string::npos;
 }
 bool SearchByGenre::match(const std::shared_ptr<Book>& book, const std::string& searchTerm)
 {
-    return toLower(book->getGenre())==toLower(searchTerm);
+    return toLower(book->getGenre()).find(toLower(searchTerm))!=std::string::npos;
 }
 
 std::vector<std::shared_ptr<Book>> SearchStrategy::search(const std::vector<std::shared_ptr<Book>>& books,const std::string& searchTerm)

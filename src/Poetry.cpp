@@ -9,6 +9,5 @@ Book(name_, author_, std::move(genre_), releaseYear_, availableCopies_), poemCou
 void Poetry::display(std::ostream& os) const
 {
     Book::display(os);
-    os << " | Type: Poetry"
-       << " | Poems: " << poemCount<< std::endl;
+    os << " | Type: Poetry" << " |  Number of poems: " << poemCount<< std::endl;
 }

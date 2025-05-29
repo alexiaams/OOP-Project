@@ -70,8 +70,8 @@ void Library::addData()
     for (const auto& reader : readerDb )
         reader->display(std::cout);
 
-    bookDb.addItem(std::make_shared<Poetry>("Luceafarul", "Mihai Eminescu", "Poezie romantica", 1883, 3, 98));
-    bookDb.addItem(std::make_shared<Novel>("Harry Potter and the Philosopher's Stone ", "J.K Rowling", "Fantasy", 1997, 5, 320, 17));
+    bookDb.addItem(std::make_shared<Poetry>("Luceafarul", "Mihai Eminescu", "Poezie romantica", 1883, 1, 98));
+    bookDb.addItem(std::make_shared<Novel>("Harry Potter and the Philosopher's Stone ", "J.K Rowling", "Fantasy", 1997, 1, 320, 17));
 
 }
 void Library::removeBook()
@@ -103,7 +103,7 @@ void Library::addReader(std::istream& is)
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout<<"Invalid choice! Please choose 1 or 2\n";
+            std::cout<<"Invalid choice! Please choose 1, 2 or 3.\n";
             continue;
         }
 
@@ -235,7 +235,7 @@ void Library::addBook(std::istream& is)
         i->display(std::cout);
 
 }
-std::shared_ptr<Reader> Library::loginUser()
+std::shared_ptr<Reader> Library::loginUser() const
 {
     std::cout<<"Enter your ID: ";
     int id;
@@ -280,12 +280,14 @@ void Library::userMenu()
              addReader(std::cin);
              break;
          }
-        else
-            std::cout<<"Invalid input! Please enter 'y' or 'n'. \n";
+
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout<<"Invalid input! Please enter 'y' or 'n'. \n";
     }
 }
 
-void Library::userMenu2(const std::shared_ptr<Reader>& user)
+void Library::userMenu2(const std::shared_ptr<Reader>& user) const
 {
     while (true)
     {
@@ -312,50 +314,51 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user)
             user->displayBorrowedBooks();
             break;
         case 3:
-                while (true)
+            while (true)
+            {
+                std::cout<<"Sort by:\n 1. None \n 2.Name\n 3.Release Year\n";
+                const int sortChoice=validateChoice(1, 3);
+                if (sortChoice==-1)
+                    return;
+                if (sortChoice==1)
+                    bookDb.displayItems();
+                else
                 {
-                    std::cout<<"Sort by:\n 1. None \n 2.Name\n 3.Realease Year\n";
-                    const int sortChoice=validateChoice(1, 3);
-                    if (sortChoice==-1)
-                        return;
-                    if (sortChoice==1)
-                        bookDb.displayItems();
-                    else
-                    { const SortBy by=(sortChoice==2)? SortBy::Name : SortBy::Year;
-                        while (true)
-                        {
-                            std::cout<<"Press 'a' (for ascending), 'd' (for descending) or 'e' to exit.\n";
-                            std::string input;
-                            std::cin>>input;
-                            if (input=="a" || input=="A")
-                            {
-                                std::vector<std::shared_ptr<Book>> sortedBooks=FilterBooks::filter(bookDb.getItems(), by, SortOrder::Ascending);
-                                for (const auto& book : sortedBooks)
-                                    book->display(std::cout);
-                                break;
-                            }
-                            if (input=="d" || input=="D")
-                            {
-                                std::vector<std::shared_ptr<Book>> sortedBooks=FilterBooks::filter(bookDb.getItems(), by, SortOrder::Descending);
-                                for (const auto& book : sortedBooks)
-                                    book->display(std::cout);
-                                break;
-                            }
-                            if (input=="e" || input=="E")
-                            {
-                                return;
-                            }
-                                std::cout<<"Invalid input! Please enter 'a', 'd' or 'e'. \n";
-                        }
-                    }
-                std::cout<<"Enter the ID of the book you want to borrow: \n";
+                    const SortBy by=(sortChoice==2)? SortBy::Name : SortBy::Year;
+                    while (true)
                     {
-                        const int bookId=validateChoice( 1, bookDb.size());
-                        if (bookId==-1)
-                        return;
-                    auto book=bookDb.findId(bookId);
-                    user->borrowBook(book);
+                        std::cout<<"Press 'a' (for ascending), 'd' (for descending) or 'e' to exit.\n";
+                        std::string input;
+                        std::cin>>input;
+                        if (input=="a" || input=="A")
+                        {
+                            std::vector<std::shared_ptr<Book>> sortedBooks=FilterBooks::filter(bookDb.getItems(), by, SortOrder::Ascending);
+                            for (const auto& book : sortedBooks)
+                                book->display(std::cout);
+                            break;
+                        }
+                        if (input=="d" || input=="D")
+                        {
+                            std::vector<std::shared_ptr<Book>> sortedBooks=FilterBooks::filter(bookDb.getItems(), by, SortOrder::Descending);
+                            for (const auto& book : sortedBooks)
+                                book->display(std::cout);
+                            break;
+                        }
+                        if (input=="e" || input=="E")
+                                return;
+
+                        std::cout<<"Invalid input! Please enter 'a', 'd' or 'e'. \n";
+                    }
                 }
+                std::cout<<"Enter the ID of the book you want to borrow: \n";
+                const int bookId=validateChoice( 1, bookDb.size());
+                if (bookId==-1)
+                    return;
+                auto book=bookDb.findId(bookId);
+               if (book!=nullptr)
+                   user->borrowBook(book);
+               else
+                    std::cout<<"No book found with ID: "<<bookId<<"\n";
                 break;
             }
             break;
@@ -376,7 +379,7 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user)
         case 6:
             return;
         default:
-            std::cout<<"Invalid input. Please choose a number between 1 and 5.\n";
+            std::cout<<"Invalid input. Please choose a number between 1 and 6.\n";
             break;
 
         }

@@ -8,7 +8,7 @@ class AveragePerson: public Reader
 {   std::string occupation;
 public:
     AveragePerson(std::string  firstName_, std::string  lastName_, int age_, std::string occupation_);
-    int membershipCost() const override;
+    double membershipCost() const override;
     int maxBooksAllowed() override;
     void display(std::ostream& os) const override;
     void addReader(std::istream& is) override;

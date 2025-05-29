@@ -22,15 +22,19 @@ bool Admin::login() const
         passwordTries++;
         return false;
     }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     if(input==password)
     {
         std::cout<<" Login successful!\n";
         return true;
     }
     else
+
     {
         std::cout << "Login failed! \n";
         passwordTries++;
+        std::cout<<"You have "<<3-passwordTries<<" tries left! \n";
         return false;
     }
 }
