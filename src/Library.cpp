@@ -26,20 +26,20 @@ Library& Library::getInstance()
         instance=new Library();
     return *instance;
 }
-int Library::validateChoice(std::istream& is, int min, const int max)
+int Library::validateChoice(const int min, const int max)
 {
     int choice;
     while (true)
     {
-        is>>choice;
-        if (is.fail())
+        std::cin>>choice;
+        if (std::cin.fail())
         {
-            is.clear();
-            is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout<<"Invalid choice! Please enter a number between "<<min<<" and "<<max<<" ( or press '0' to exit)\n";
             continue;
         }
-        is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         if (choice==0)
             return -1;
         if (choice<min || choice>max)
@@ -166,7 +166,7 @@ void Library::addData()
 // }
 void Library::removeBook()
 {   std::cout<<"Enter the ID of the book you want to delete: \n";
-    const int id=validateChoice(std::cin, 1, bookDb.size());
+    const int id=validateChoice( 1, bookDb.size());
     if (id==-1)
         return ;
     if (!bookDb.removeItem(id))
@@ -272,7 +272,7 @@ bool Library::adminMenu()
             std::cout<<"4. Display readers\n";
             std::cout<<"5. Search a book\n";
             std::cout<<"6. Exit\n";
-            const int choice = validateChoice(std::cin, 1, 6);
+            const int choice = validateChoice(1, 6);
             if (choice==-1)
             {
                 std::cout<<"am iesit\n";
@@ -309,7 +309,7 @@ bool Library::adminMenu()
 void Library::addBook(std::istream& is)
 {
     std::cout<<"What do you want to add? (1 for Poetry and 2 for Novel)\n";
-    const int type = validateChoice( std::cin, 1, 2);
+    const int type = validateChoice( 1, 2);
     if (type==-1)
         return;
     auto book=BookFactory::createBook(is, type);
@@ -405,7 +405,7 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user) const
         std::cout<<"6. Exit\n";
         std::cout<<"=========================\n";
         std::cout<<"What do you want to do?\n";
-        const int choice=validateChoice( std::cin, 1, 6);
+        const int choice=validateChoice( 1, 6);
         if (choice==-1)
             return;
         switch (choice)
@@ -420,7 +420,7 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user) const
             while (true)
             {
                 std::cout<<"Sort by:\n 1. None \n 2.Name\n 3.Release Year\n";
-                const int sortChoice=validateChoice(std::cin, 1, 3);
+                const int sortChoice=validateChoice(1, 3);
                 if (sortChoice==-1)
                     return;
                 if (sortChoice==1)
@@ -454,7 +454,7 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user) const
                     }
                 }
                 std::cout<<"Enter the ID of the book you want to borrow: \n";
-                const int bookId=validateChoice( std::cin, 1, bookDb.size());
+                const int bookId=validateChoice( 1, bookDb.size());
                 if (bookId==-1)
                     return;
                 auto book=bookDb.findId(bookId);
@@ -469,7 +469,7 @@ void Library::userMenu2(const std::shared_ptr<Reader>& user) const
             {
                 user->displayBorrowedBooks();
                 std::cout<<"Enter ID of book to return: ";
-                const int bookId=validateChoice(std::cin, 1, bookDb.size());
+                const int bookId=validateChoice(1, bookDb.size());
                 if (bookId==-1)
                     return;
                 auto book=bookDb.findId(bookId);
@@ -497,7 +497,7 @@ void Library::start()
         std::cout << "2. Login admin\n";
         std::cout << "3. Exit\n";
         int choice;
-        choice = validateChoice(std::cin, 1, 3);
+        choice = validateChoice(1, 3);
         switch (choice) {
             case 1:
                 userMenu();
