@@ -25,6 +25,7 @@ public:
     void userMenu();
     bool adminMenu();
     void start();
+    //bool stringInput(std::istream& is, std::string& input);
     void searchBook() const;
     std::shared_ptr<Reader> loginUser() const;
     void userMenu2(const std::shared_ptr<Reader>& user) const;

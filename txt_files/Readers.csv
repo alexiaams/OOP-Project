@@ -1,0 +1,5 @@
+type,firstName,lastName,age,grade,occupation
+student,Alex,Popescu,19,11,
+student,Maria,Ionescu,20,12,
+person,Ana,Marinescu,45,,Teacher
+person,Mihai,Popa,70,,Driver

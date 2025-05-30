@@ -16,6 +16,8 @@
 #include "InvalidNumber.h"
 #include "SearchStrategy.h"
 #include "BookFactory.h"
+#include <fstream>
+#include <sstream>
 
 Library* Library::instance=nullptr;
 Library& Library::getInstance()
@@ -55,25 +57,112 @@ void Library::addData()
 {
     StudentBuilder builderS;
     PersonBuilder builderP;
+    std::fstream fin;
+    fin.open("../txt_files/Readers.csv");
 
-    Student s1 = builderS.addFirstName("Alex").addLastName("Popescu").addAge(19).addGrade(11).build();
-    Student s2 = builderS.addFirstName("Maria").addLastName("Ionescu").addAge(20).addGrade(12).build();
+    std::string line;
+    std::getline(fin, line); // prima linie
 
-    AveragePerson p1 = builderP.addFirstName("Ana").addLastName("Marinescu").addAge(45).addOccupation("Teacher").build();
-    AveragePerson p2 = builderP.addFirstName("Mihai").addLastName("Popa").addAge(70).addOccupation("Driver").build();
+    while (std::getline(fin, line))
+    {
+        std::string type, firstName, lastName, age, grade, occupation;
+        std::stringstream s(line);
+        std::getline(s, type, ',');
+        std::getline(s, firstName, ',');
+        std::getline(s, lastName, ',');
+        std::getline(s, age, ',');
+        std::getline(s, grade, ',');
+        std::getline(s, occupation, ',');
 
-    readerDb.addItem(std::make_shared<Student>(s1));
-    readerDb.addItem(std::make_shared<Student>(s2));
-    readerDb.addItem(std::make_shared<AveragePerson>(p1));
-    readerDb.addItem(std::make_shared<AveragePerson>(p2));
+        int age_,grade_ = 0;
 
-    for (const auto& reader : readerDb )
-        reader->display(std::cout);
+        if (age.empty()==false)
+            age_=std::stoi(age);
+        if (grade.empty()==false)
+            grade_=std::stoi(grade); // din string in int
 
-    bookDb.addItem(std::make_shared<Poetry>("Luceafarul", "Mihai Eminescu", "Poezie romantica", 1883, 1, 98));
-    bookDb.addItem(std::make_shared<Novel>("Harry Potter and the Philosopher's Stone ", "J.K Rowling", "Fantasy", 1997, 1, 320, 17));
+        if (type == "student")
+        {
+            Student stud = builderS.addFirstName(firstName).addLastName(lastName).addAge(age_).addGrade(grade_).build();
+            readerDb.addItem(std::make_shared<Student>(stud));
+        }
+
+        else if (type == "person")
+        {
+            AveragePerson pers = builderP.addFirstName(firstName).addLastName(lastName).addAge(age_).addOccupation(occupation).build();
+            readerDb.addItem(std::make_shared<AveragePerson>(pers));
+        }
+
+    }
+    fin.close();
+
+    fin.open("../txt_files/Books.csv");
+    std::getline(fin, line); // prima linie
+    while (std::getline(fin, line))
+    {
+        std::string type, name, author, genre, year, copies, poems, pages, chapters;
+        std::stringstream s(line);
+        std::getline(s, type, ',');
+        std::getline(s, name, ',');
+        std::getline(s, author, ',');
+        std::getline(s, genre, ',');
+        std::getline(s, year, ',');
+        std::getline(s, copies, ',');
+        std::getline(s, poems, ',');
+        std::getline(s, pages, ',');
+        std::getline(s, chapters, ',');
+
+        int year_,copies_, poems_, pages_, chapters_ = 0;
+
+        if (year.empty()==false)
+            year_=std::stoi(year);
+        if (copies.empty()==false)
+            copies_=std::stoi(copies);
+        if (poems.empty()==false)
+            poems_=std::stoi(poems);
+        if (pages.empty()==false)
+            pages_=std::stoi(pages);
+        if (chapters.empty()==false)
+            chapters_=std::stoi(chapters);
+
+        if (type=="poetry")
+            bookDb.addItem(std::make_shared<Poetry>(name,author, genre, year_, copies_, poems_));
+        else if (type=="novel")
+            bookDb.addItem(std::make_shared<Novel>(name,author, genre, year_, copies_, pages_, chapters_));
+    }
+    fin.close();
+
+    // for (const auto& reader : readerDb)
+    //     reader->display(std::cout);
+    //
+    // for (const auto& book : bookDb)
+    //
+    //     book->display(std::cout);
+
 
 }
+// { Varianta inainte sa mi iasa cu fisiere
+//     StudentBuilder builderS;
+//     PersonBuilder builderP;
+//
+//     Student s1 = builderS.addFirstName("Alex").addLastName("Popescu").addAge(19).addGrade(11).build();
+//     Student s2 = builderS.addFirstName("Maria").addLastName("Ionescu").addAge(20).addGrade(12).build();
+//
+//     AveragePerson p1 = builderP.addFirstName("Ana").addLastName("Marinescu").addAge(45).addOccupation("Teacher").build();
+//     AveragePerson p2 = builderP.addFirstName("Mihai").addLastName("Popa").addAge(70).addOccupation("Driver").build();
+//
+//     readerDb.addItem(std::make_shared<Student>(s1));
+//     readerDb.addItem(std::make_shared<Student>(s2));
+//     readerDb.addItem(std::make_shared<AveragePerson>(p1));
+//     readerDb.addItem(std::make_shared<AveragePerson>(p2));
+//
+//     for (const auto& reader : readerDb )
+//         reader->display(std::cout);
+//
+//     bookDb.addItem(std::make_shared<Poetry>("Luceafarul", "Mihai Eminescu", "Poezie romantica", 1883, 1, 98));
+//     bookDb.addItem(std::make_shared<Novel>("Harry Potter and the Philosopher's Stone ", "J.K Rowling", "Fantasy", 1997, 1, 320, 17));
+//
+// }
 void Library::removeBook()
 {   std::cout<<"Enter the ID of the book you want to delete: \n";
     const int id=validateChoice( 1, bookDb.size());
@@ -83,8 +172,8 @@ void Library::removeBook()
         std::cout<<"No book found with ID: "<<id<<std::endl;
     else
         std::cout<<"Book deleted! \n";
-    for (const auto& i : bookDb )
-        i->display(std::cout);
+    // for (const auto& i : bookDb )
+    //     i->display(std::cout);
 }
 
 void Library::addReader(std::istream& is)
@@ -98,7 +187,7 @@ void Library::addReader(std::istream& is)
                    "2. Normal Membership \n"
                    "3. Cancel\n";
         std::cin>>choice;
-//chestie cautata pe google (Geeks for geeks)
+    //chestie cautata pe google (Geeks for geeks)
         if (std::cin.fail())
         {
             std::cin.clear();
@@ -126,8 +215,8 @@ void Library::addReader(std::istream& is)
         break;
     }
     readerDb.addItem(reader);
-    for (const auto& i : readerDb )
-        i->display(std::cout);
+    // for (const auto& i : readerDb )
+    //     i->display(std::cout);
 
 }
 void Library::searchBook() const
@@ -231,8 +320,8 @@ void Library::addBook(std::istream& is)
     else
         std::cout<<"Book adding failed.\n";
 
-    for (const auto& i : bookDb )
-        i->display(std::cout);
+    // for (const auto& i : bookDb )
+    //     i->display(std::cout);
 
 }
 std::shared_ptr<Reader> Library::loginUser() const
@@ -253,7 +342,6 @@ std::shared_ptr<Reader> Library::loginUser() const
         userMenu2(user);
         return user;
     }
-
     std::cout<<"No user found with ID: "<<id<<"\n";
     return nullptr;
 }
@@ -286,6 +374,20 @@ void Library::userMenu()
         std::cout<<"Invalid input! Please enter 'y' or 'n'. \n";
     }
 }
+// bool Library:: stringInput(std::istream& is, std::string& input)
+// {
+//     while (true)
+//     {
+//         std::getline(is, input);
+//         bool stringValidate = std::find_if(input.begin(), input.end(),
+//                        [](char c) { return !std::isalpha(c); }) != input.end();
+//         if (stringValidate==false)
+//             return true;
+//         std::cout<<"Invalid input! Please enter a valid name (letters only).\n";
+//
+//
+//     }
+// }
 
 void Library::userMenu2(const std::shared_ptr<Reader>& user) const
 {

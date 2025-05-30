@@ -11,7 +11,7 @@
 int Reader::totalReaders=0;
 Reader::Reader(std::string firstName_, std::string  lastName_, const int age_): firstName(std::move(firstName_)), lastName(std::move(lastName_)), age(age_), readerId(++totalReaders), months(0)
 {
-    std::cout<<"reader id:"<<readerId<<std::endl;
+   // std::cout<<"reader id:"<<readerId<<std::endl;
 }
 
 

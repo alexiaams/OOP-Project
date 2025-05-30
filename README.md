@@ -1,13 +1,25 @@
 ## Library Managment System.
 Proiectul implementeaza gestiunea unei biblioteci.
 Functionalitati:
-1. 2 meniuri separate pentru admin si user.
+1. 2 meniuri separate pentru admin si user, cu functii diferite in functie de rol.
 2. Fiecare carte si fiecare user au ID unic propriu.
-3. Posiblititatea de a sorta si cauta carti dupa anumite criterii.
-4. Mai multe tipuri de cititori (studenti si oameni normali).
+3. Posiblititatea de a sorta si cauta partial (un singur cuvant) carti dupa anumite criterii : titlu, nume autor si gen.
+4. Mai multe tipuri de cititori (studenti si oameni normali) si mai multe tipuri de carti (poezii si romane).
 5. Ca admin ai 3 incercari de a pune parola corecta, in caz contrar esti banat.
 6. Functionalitati admin : adauga/sterge carti, vede cartile si cititorii din "baza de date", cautare o carte dupa titlu/autor/gen.
+7. Functionalitati user: vezi, imprumuta, returneaza, cauta si sorteaza (crescator sau descrescator dupa nume sau an aparitie) cartile, pret al abonamentului personalizat in functie de varsta si profesie.
+7. Exceptii pentru input invalid.
+8. Validare input de la utilizator.
+9. Carti si cititori default salvati in fisiere csv.
+10. Meniu interactiv.
+11. Utilizare de design patterns si clase template.
 
+
+De unde am invatat cum sa fac niste chestii:
+https://www.geeksforgeeks.org/how-to-validate-user-input-in-cpp/
+https://www.geeksforgeeks.org/how-to-convert-std-string-to-lower-case-in-cpp/
+https://refactoring.guru/design-patterns
+https://stackoverflow.com/questions/7616867/how-to-test-a-string-for-letters-only
 
   
 ## Cerințe

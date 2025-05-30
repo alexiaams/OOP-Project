@@ -30,7 +30,6 @@ bool Admin::login() const
         return true;
     }
     else
-
     {
         std::cout << "Login failed! \n";
         passwordTries++;
