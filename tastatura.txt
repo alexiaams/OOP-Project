@@ -3,7 +3,6 @@ d
 1
 2
 1234
-d
 1
 poezie
 cineva
