@@ -74,7 +74,8 @@ void Library::addData()
         std::getline(s, grade, ',');
         std::getline(s, occupation, ',');
 
-        int age_,grade_ = 0;
+        int age_=0;
+        int grade_ = 0;
 
         if (age.empty()==false)
             age_=std::stoi(age);
