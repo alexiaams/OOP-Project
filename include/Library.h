@@ -29,7 +29,7 @@ public:
     void searchBook() const;
     std::shared_ptr<Reader> loginUser() const;
     void userMenu2(const std::shared_ptr<Reader>& user) const;
-    static int validateChoice(int min, int max);
+    static int validateChoice(std::istream& is, int min, int max);
 
 
 };
