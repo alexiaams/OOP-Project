@@ -13,7 +13,6 @@ protected:
     std::string author;
     std::string genre;
     int releaseYear;
-    bool availability= true;
     int availableCopies;
 public:
     Book(std::string  name_, std::string  author_, std::string genre_, int releaseYear_, int availableCopies_);

@@ -18,15 +18,12 @@ const std::string& Book:: getAuthor() const{return author;}
 Book& Book::operator++()
 {
     ++availableCopies;
-    availability=true;
     return *this;
 }
 Book& Book::operator--()
 {
     if (availableCopies>0)
         --availableCopies;
-    else
-        availability=false;
     return *this;
 }
 

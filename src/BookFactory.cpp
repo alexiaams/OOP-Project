@@ -8,7 +8,7 @@
 #include "InvalidNumber.h"
 
 
-std::shared_ptr<Book> BookFactory::createBook(std::istream& is, int type)
+std::shared_ptr<Book> BookFactory::createBook(std::istream& is, const int type)
 {
     std::string name_, author_, genre_;
     int releaseYear_, availableCopies_;
