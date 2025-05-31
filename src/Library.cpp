@@ -27,9 +27,10 @@ Library& Library::getInstance()
     return *instance;
 }
 int Library::validateChoice(const int min, const int max)
-{
+{  const int maxTries=3;// userul poate pune gresit de max 3 ori
+    int tries=0;
     int choice;
-    while (true)
+    while (tries<maxTries)
     {
         std::cin>>choice;
         if (std::cin.fail())
@@ -37,6 +38,7 @@ int Library::validateChoice(const int min, const int max)
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout<<"Invalid choice! Please enter a number between "<<min<<" and "<<max<<" ( or press '0' to exit)\n";
+            tries++;
             continue;
         }
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -45,11 +47,14 @@ int Library::validateChoice(const int min, const int max)
         if (choice<min || choice>max)
         {
             std::cout<<"Invalid choice! Please enter a number between "<<min<<" and "<<max<<" ( or press '0' to exit)\n";
+            tries++;
             continue;
         }
         return choice;
 
     }
+    std::cout<<"Too many tries\n";
+    return -1;
 }
 
 
