@@ -44,8 +44,11 @@
 
 Some links that helped me:
 https://www.geeksforgeeks.org/how-to-validate-user-input-in-cpp/
+
 https://www.geeksforgeeks.org/how-to-convert-std-string-to-lower-case-in-cpp/
+
 https://refactoring.guru/design-patterns
+
 https://stackoverflow.com/questions/7616867/how-to-test-a-string-for-letters-only
 
 
