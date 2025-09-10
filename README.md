@@ -1,4 +1,4 @@
-# Library Manager
+# Library Management
 *A C++ console app built for my OOP course (Year 1, Semester 2). It simulates a small library with roles, search/sort, borrowing/returning, and CSV seeding.*
 
 ## Features
